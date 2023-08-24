@@ -4,9 +4,13 @@ import "quill/dist/quill.snow.css"
 
 import Quill from 'quill';
 import { io } from 'socket.io-client';
+import { useParams } from 'react-router-dom';
+
+const AUTOSAVE_INTERVAL = 10000;
 
 const TextEditor = () => {
 
+    const {id: documentId} = useParams()
     const [socket, setSocket] = useState() as any;
     const [quill, setQuill] = useState() as any;
 
@@ -52,6 +56,29 @@ const TextEditor = () => {
       }
 
     }, [socket, quill])
+
+	// -- UseEffect for rooms and loading documents ------------------------------
+    useEffect(() => {
+        if (socket == null || quill == null) return
+
+		socket.once('load-document', (document: any) => {
+			quill.setContents(document)
+			quill.enable()
+		})
+
+		socket.emit("get-document", documentId)
+
+    }, [socket, quill, documentId])
+
+	// -- UseEffect for recieving updates ------------------------------
+    useEffect(() => {
+		if (socket == null || quill == null) return
+		
+		setInterval(() => {
+			socket.emit("save-document", quill.getContents())
+		}, AUTOSAVE_INTERVAL)
+  
+	  }, [socket, quill])
 
     // -- Quill text editor setting configuration ------------------------------------------
     const modules = {
@@ -105,7 +132,11 @@ const TextEditor = () => {
         modules: modules,
         formats: formats
       })
+	  q.disable();
+	  q.setText("Loading...")
       setQuill(q)
+
+	
       
     }, [])
 
