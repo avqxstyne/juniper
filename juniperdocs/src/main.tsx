@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 import ErrorPage from './react-components/ErrorPage.tsx';
 import { v4 as uuidV4 } from 'uuid'
+import Homepage from './react-components/Homepage.tsx';
 
 
 const router = createBrowserRouter([
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
     path: "documents/:id",
     element: <App />,
   },
+  {
+    path: "homepage",
+    element: <Homepage />
+  }
 ]);
 
 
