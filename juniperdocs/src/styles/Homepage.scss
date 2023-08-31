@@ -1,0 +1,15 @@
+#display-container {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 4rem;
+    gap: 2rem;
+}
+
+.homepage-document-list-item {
+    width: 5rem;
+    height: 8rem;
+    border: 1px solid black;
+    background-color: white;
+    color: black;
+    overflow: hidden;
+}

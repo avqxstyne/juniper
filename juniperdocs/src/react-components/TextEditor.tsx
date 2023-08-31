@@ -75,7 +75,8 @@ const TextEditor = () => {
 		if (socket == null || quill == null) return
 		
 		setInterval(() => {
-			socket.emit("save-document", quill.getContents())
+      // @ts-ignore
+			socket.emit("save-document", quill.getContents(), document.querySelector(".document-name").value)
 		}, AUTOSAVE_INTERVAL)
   
 	  }, [socket, quill])
@@ -142,8 +143,10 @@ const TextEditor = () => {
 
     return (
 
-
-        <div className="quill" ref={wrapperRef}></div>
+        <>
+          <input type="text" className='document-name' defaultValue={"Untitled Document"}/>
+          <div className="quill" ref={wrapperRef}></div>
+        </>
 
     )
 }

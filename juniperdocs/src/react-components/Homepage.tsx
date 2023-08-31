@@ -1,12 +1,13 @@
 import { useEffect, useState, useRef } from 'react'
 import mySvg from '../assets/juniperfv.svg'
 import { io } from 'socket.io-client';
+import '../styles/Homepage.scss'
 
 const Homepage = () => {
 
     const [socket, setSocket] = useState() as any;
     // @ts-ignore
-    const input = document.getElementById("gay")
+    const input = document.getElementById("gay");
 
     useEffect(() => {
         const s = io("http://localhost:8000");
@@ -18,12 +19,22 @@ const Homepage = () => {
 
     useEffect(() => {
         if (socket == null) return
-
         socket.emit('get-all')
 
-        socket.once('display-all', (ids: any[]) => {
-            for (let i = 0; i < ids.length; i++) {            
-                document.getElementById("display-container")?.appendChild(  document.createTextNode(`Document ${i}, ${ids[i]}. `))
+        socket.once('display-all', (data: any[]) => {
+            for (let i = 0; i < data.length; i++) {            
+                const displayContainer = document.getElementById("display-container");
+
+                const newChild = document.createElement('div')
+                newChild.classList.add("homepage-document-list-item")
+
+                const subChildLink = document.createElement('a')
+                subChildLink.href = `http://localhost:5173/documents/${data[i].id}`;  
+                subChildLink.innerText = `${data[i].name}`
+
+                newChild.appendChild(subChildLink)
+
+                displayContainer?.appendChild(newChild)
             }
         })
     }, [input])
@@ -33,7 +44,12 @@ const Homepage = () => {
             <div className='homepage-navbar'>
                 <img src={mySvg}></img>
                 <h1>Juniper</h1>
-                <button>Create new document</button>
+                <button 
+                    className='create-new-document-button'
+                    onClick={() => {
+                        window.open('/','_blank');
+                    }}
+                >Create new document</button>
                 <input placeholder='search existing documents' id='gay'></input>
             </div>
             <div id='display-container'>
