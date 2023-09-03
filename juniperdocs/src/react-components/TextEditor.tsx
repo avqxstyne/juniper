@@ -5,6 +5,7 @@ import "quill/dist/quill.snow.css"
 import Quill from 'quill';
 import { io } from 'socket.io-client';
 import { useParams } from 'react-router-dom';
+import mySvg from '../assets/juniperfv.svg'
 
 const AUTOSAVE_INTERVAL = 10000;
 
@@ -13,6 +14,7 @@ const TextEditor = () => {
     const {id: documentId} = useParams()
     const [socket, setSocket] = useState() as any;
     const [quill, setQuill] = useState() as any;
+    const [name, setName] = useState("Untitled Document");
 
     // -- UseEffect for server connection to socket.io server ------------------------------
     useEffect(() => {
@@ -61,9 +63,12 @@ const TextEditor = () => {
     useEffect(() => {
         if (socket == null || quill == null) return
 
-		socket.once('load-document', (document: any) => {
-			quill.setContents(document)
+		socket.once('load-document', (doc: any) => {
+			quill.setContents(doc.data)
 			quill.enable()
+
+      // @ts-ignore
+      document.querySelector(".document-name").defaultValue = doc.name
 		})
 
 		socket.emit("get-document", documentId)
@@ -144,7 +149,19 @@ const TextEditor = () => {
     return (
 
         <>
-          <input type="text" className='document-name' defaultValue={"Untitled Document"}/>
+          <div className='toolbar'>
+            <img src={mySvg} onClick={() => {
+                        window.open('/homepage','_blank');
+                    }}></img>
+            <div className='name-container'>
+              <input type="text" className='document-name'/>
+              <button onClick={() => { 
+                // @ts-ignore
+                socket.emit("save-document", quill.getContents(), document.querySelector(".document-name").value)
+              }}>Save</button>
+            </div>
+
+          </div>
           <div className="quill" ref={wrapperRef}></div>
         </>
 

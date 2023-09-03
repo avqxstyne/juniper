@@ -9,10 +9,12 @@
 	gap: 2rem;
 	align-items: center;
 
-	.ql-toolbar {
+	.ql-toolbar.ql-snow {
 		background-color: rgb(255, 255, 255);
+		border: none;
 		border-bottom: 1px solid rgb(161, 161, 161);
-		box-shadow: 0px 0px 10px rgb(175, 175, 175);
+		box-shadow: 0 0 black inset,0 0 10px rgb(164, 164, 164), 0 0 blue inset, 0 0 green inset;
+		// box-shadow: 0px 0px 10px rgb(175, 175, 175);
 		width: 100%;
 		display: flex;
 		justify-content: center;
@@ -20,6 +22,7 @@
 		top: 0;
 		z-index: 99;
 	}
+
 
 	.ql-container {
 		width: 8.5in;
@@ -35,30 +38,52 @@
 	}
 }
 
-.homepage-navbar {
-	display: flex;
-	align-items: center;
-	justify-content: flex-start;
+
+.toolbar {
 	position: sticky;
 	top: 0;
-	box-shadow: 0px 0px 10px rgb(190, 190, 190);
-	border-bottom: 1px solid rgb(196, 196, 196);
-	padding: 0.5rem;
+	z-index: 999;
+	background-color: white;
+	padding: 1rem 1rem 0 1rem;
+	display: flex;
+	align-items: center;
 	gap: 1rem;
-	background-color: #fff5f4;
 	img {
-		background-color: white;
+		width: 3.7rem;
 	}
-	h1 {
-		font-size: 1.5rem;
-		font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-	}
-	button {
-		padding: 1rem;
-	}
+	div.name-container {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 0.25rem;
+		input {
 
+			
+			outline: none;
+			transition: 0.2s ease;
+			font-size: 1.05rem;
+			&:focus {
+				border: 2px solid rgb(112, 56, 56);
+			}
+		}
+		button {
+			appearance: none;
+			outline: none;
+			border: none;
+			background-color: transparent;
+			border-radius: 4px;
+			padding: 4px;
+			transition: 0.2s ease;
+			&:hover {
+				background-color: #eae4e4;
+			}
+			&:active {
+				transform: scale(0.8);
+			}
+		}
+
+	}
 }
-
 
 
 
