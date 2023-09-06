@@ -8,4 +8,4 @@ const Document = new Schema({
 
 const docModel = model("Document", Document)
 
-export default docModel
+export default docModel 
