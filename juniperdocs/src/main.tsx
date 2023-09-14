@@ -11,7 +11,7 @@ import { v4 as uuidV4 } from 'uuid'
 import Homepage from './react-components/Homepage.tsx';
 
 
-const router = createBrowserRouter([
+const router = createBrowserRouter([ 
   {
     path: "/",
     element: <Navigate to={`/documents/${uuidV4()}`} />,
