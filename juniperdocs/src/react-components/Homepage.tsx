@@ -2,12 +2,27 @@ import { useEffect, useState, useRef } from 'react'
 import mySvg from '../assets/juniperfv.svg'
 import { io } from 'socket.io-client';
 import '../styles/Homepage.scss'
+import DocView from './classes/DocView.js'
 
-const Homepage = () => {
+
+type Props = {
+
+    name: "searchDocumentsInput",
+  
+    id: "searchDocumentsInput",
+    
+    placeholder: "Search Documents."
+  
+  };
+
+
+const Homepage = (props: Props) => {
 
     const [socket, setSocket] = useState() as any;
+    const [value, setValue] = useState("");
     // @ts-ignore
-    const input = document.getElementById("gay");
+
+    
 
     useEffect(() => {
         const s = io("http://localhost:8000");
@@ -22,22 +37,25 @@ const Homepage = () => {
         socket.emit('get-all')
 
         socket.once('display-all', (data: any[]) => {
-            for (let i = 0; i < data.length; i++) {            
-                const displayContainer = document.getElementById("display-container");
+            for (let i = 0; i < data.length; i++) {       
+                
 
-                const newChild = document.createElement('div')
-                newChild.classList.add("homepage-document-list-item")
+                // IMPLEMENTING THE CLASS INHERITANCE REQUIREMENT IN APP FUNCTIONALITY
+                let href = `http://localhost:5173/document/${data[i].id}`
+                let text = `${data[i].name}`
 
-                const subChildLink = document.createElement('a')
-                subChildLink.href = `http://localhost:5173/documents/${data[i].id}`;  
-                subChildLink.innerText = `${data[i].name}`
+                let docView: DocView = new DocView(href, text)
+                docView.delete()
 
-                newChild.appendChild(subChildLink)
+                if (text.includes(value)) {
+                    docView.create()
+                }
 
-                displayContainer?.appendChild(newChild)
+                
             }
         })
-    }, [input])
+        console.log("relooaded") 
+    }, [value])
 
     return (
         <>
@@ -50,7 +68,13 @@ const Homepage = () => {
                         window.open('/','_blank');
                     }}
                 >Create new document</button>
-                <input placeholder='search existing documents' id='gay'></input>
+                <input 
+                    type="text" 
+                    name={props.name} 
+                    id={props.id} 
+                    value={value} 
+                    placeholder={props.placeholder} 
+                    onChange={(e) => setValue(e.target.value)}/>            
             </div>
             <div id='display-container'>
 

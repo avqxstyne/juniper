@@ -1,9 +1,10 @@
 class Doc {
     // Create a document with name and a link to it
-    constructor(link, name) {
+    constructor(link, name, id) {
         // The constructor properties will be passed down to the extended class
         this.link = link;
         this.name = name;
+        this.id = id
     }
 }
 
@@ -29,5 +30,16 @@ export default class DocView extends Doc {
 
         // Put the div on the visible homescreen
         displayContainer?.appendChild(newChild)
+    }
+
+    delete() {
+        const displayContainer = document.getElementById("display-container");
+
+        const displayElements = document.getElementsByClassName("homepage-document-list-item")
+        for (let i = 0; i < displayElements.length; i++) {
+            if (displayElements[i].children[0].href == this.link) {
+                displayContainer.removeChild(displayElements[i])
+            }
+        }
     }
 }
