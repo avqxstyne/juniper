@@ -71,7 +71,7 @@ const TextEditor = () => {
       document.querySelector(".document-name").defaultValue = doc.name
 		})
 
-		socket.emit("get-document", documentId)
+		socket.emit("get-document", documentId, localStorage.getItem('username'))
 
     }, [socket, quill, documentId])
 
@@ -81,7 +81,7 @@ const TextEditor = () => {
 		
 		setInterval(() => {
       // @ts-ignore
-			socket.emit("save-document", quill.getContents(), document.querySelector(".document-name").value)
+			socket.emit("save-document", quill.getContents(), document.querySelector(".document-name").value, Date.now())
 		}, AUTOSAVE_INTERVAL)
   
 	  }, [socket, quill])
@@ -150,14 +150,16 @@ const TextEditor = () => {
 
         <>
           <div className='toolbar'>
-            <img src={mySvg} onClick={() => {
-                        window.open('/homepage','_blank');
-                    }}></img>
+            <img 
+              src={mySvg} 
+              onClick={() => {
+                window.open('/homepage', '_self');
+              }}></img>
             <div className='name-container'>
               <input type="text" className='document-name'/>
               <button onClick={() => { 
                 // @ts-ignore
-                socket.emit("save-document", quill.getContents(), document.querySelector(".document-name").value)
+                socket.emit("save-document", quill.getContents(), document.querySelector(".document-name").value, Date.now())
               }}>Save</button>
             </div>
 
