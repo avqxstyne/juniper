@@ -100,29 +100,40 @@ const Homepage = (props: Props) => {
     return (
         <>
             <div className='homepage-navbar'>
-                <img src={mySvg}></img>
-                <h1>Juniper</h1>
-                <button 
-                    className='create-new-document-button'
-                    onClick={() => {
-                        window.open('/','_self');
-                    }}
-                >Create new document</button>
-                <div>
-                <label htmlFor="search">Search Documents</label>
-                <input 
-                    type="text" 
-                    name="search" 
-                    id={props.id} 
-                    value={value} 
-                    onChange={(e) => setValue(e.target.value)}/> 
-                    </div> 
+
+                <div className="container">
+                    <div className='header'>
+                        <img src={mySvg}></img>
+                        <h1>Juniper</h1>
+                    </div>
+                    <div className='tools'>
+                        <button 
+                            className='create-new-document-button'
+                            onClick={() => {
+                                window.open('/','_self');
+                            }}
+                            >Create new document
+                        </button>
+                        <div>
+                                <input 
+                                type="text" 
+                                name="search" 
+                                placeholder='Search Documents'
+                                id={props.id} 
+                                value={value} 
+                                onChange={(e) => setValue(e.target.value)}/> 
+                        </div> 
+                    </div>
+                </div>
+                
+
                 <button 
                     onClick={() => {
                         localStorage.clear();
                         window.open('/login', '_self')
                     }}
-                >Profile</button>          
+                    className='profile-button'
+                >Log Out</button>          
             </div>
             <div id='display-container'>
 
