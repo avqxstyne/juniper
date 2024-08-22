@@ -11,7 +11,9 @@ import { v4 as uuidV4 } from 'uuid'
 import Homepage from './react-components/Homepage.tsx';
 import SignupPage from './react-components/SignupPage.tsx'
 import LoginPage from './react-components/LoginPage.tsx';
+import { disableReactDevTools } from '@fvilers/disable-react-devtools';
 
+if (process.env.NODE_ENV === 'production') disableReactDevTools()
 
 const router = createBrowserRouter([
 
