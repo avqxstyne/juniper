@@ -6,7 +6,6 @@ interface BaseProps {
   className: string
   [key: string]: unknown
 }
-type OrNull<T> = T | null
 
 export const Button = React.forwardRef(
   (
@@ -21,7 +20,7 @@ export const Button = React.forwardRef(
         reversed: boolean
       } & BaseProps
     >,
-    ref: Ref<OrNull<HTMLSpanElement>>
+    ref: Ref<HTMLSpanElement>
   ) => (
     <span
       {...props}
@@ -53,11 +52,11 @@ export const EditorValue = React.forwardRef(
       {
         value: any
       } & BaseProps
-    >,
-    ref: Ref<OrNull<null>>
+    >, // the Ref<OrNull<null>> one
+    ref: Ref<HTMLDivElement>
   ) => {
     const textLines = value.document.nodes
-      .map(node => node.text)
+      .map((node: { text: any }) => node.text)
       .toArray()
       .join('\n')
     return (
@@ -103,7 +102,7 @@ export const EditorValue = React.forwardRef(
 export const Icon = React.forwardRef(
   (
     { className, ...props }: PropsWithChildren<BaseProps>,
-    ref: Ref<OrNull<HTMLSpanElement>>
+    ref: Ref<HTMLSpanElement>
   ) => (
     <span
       {...props}
@@ -123,7 +122,7 @@ export const Icon = React.forwardRef(
 export const Instruction = React.forwardRef(
   (
     { className, ...props }: PropsWithChildren<BaseProps>,
-    ref: Ref<OrNull<HTMLDivElement>>
+    ref: Ref<HTMLDivElement>
   ) => (
     <div
       {...props}
@@ -145,7 +144,7 @@ export const Instruction = React.forwardRef(
 export const Menu = React.forwardRef(
   (
     { className, ...props }: PropsWithChildren<BaseProps>,
-    ref: Ref<OrNull<HTMLDivElement>>
+    ref: Ref<HTMLDivElement>
   ) => (
     <div
       {...props}
@@ -167,7 +166,7 @@ export const Menu = React.forwardRef(
   )
 )
 
-export const Portal = ({ children }) => {
+export const Portal = (children: any) => {
   return typeof document === 'object'
     ? ReactDOM.createPortal(children, document.body)
     : null
@@ -176,17 +175,17 @@ export const Portal = ({ children }) => {
 export const Toolbar = React.forwardRef(
   (
     { className, ...props }: PropsWithChildren<BaseProps>,
-    ref: Ref<OrNull<HTMLDivElement>>
+    ref: Ref<HTMLDivElement>
   ) => (
     <Menu
       {...props}
       ref={ref}
       className={cx(
-        className,
+        className, 
         css`
           position: relative;
           padding: 1px 18px 17px;
-          margin: 0 -20px;
+          margin: 0 -20px; 
           border-bottom: 2px solid #eee;
           margin-bottom: 20px;
         `

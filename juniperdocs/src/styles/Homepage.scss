@@ -1,3 +1,7 @@
+
+$primary-color: #ffffff; // Adjust as needed
+$secondary-color: #000000; // Adjust as needed
+
 #display-container {
     display: flex;
     flex-wrap: wrap;
@@ -6,33 +10,182 @@
 }
 
 .homepage-document-list-item {
-    width: 5rem;
-    height: 8rem;
-    border: 1px solid black;
+    width: 16rem;
+    height: 24rem;
+    border: 1px solid rgb(169, 169, 169);
     background-color: white;
     color: black;
-    overflow: hidden;
-}
-.homepage-navbar {
-	display: flex;
-	align-items: center;
-	justify-content: flex-start;
-	position: sticky;
-	top: 0;
 	box-shadow: 0px 0px 10px rgb(190, 190, 190);
-	border-bottom: 1px solid rgb(196, 196, 196);
-	padding: 0.5rem;
-	gap: 1rem;
-	background-color: #fff5f4;
-	img {
-		background-color: white;
-	}
-	h1 {
-		font-size: 1.5rem;
-		font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-	}
-	button {
-		padding: 1rem;
+    overflow: hidden;
+	padding: 1rem;
+	a {
+		color: black;
+		font-size: 2rem;
 	}
 
+	div {
+		font-size: 1.5rem;
+		margin-top: 15rem;
+	}
 }
+// .homepage-navbar {
+// 	display: flex;
+// 	justify-content: flex-start;
+// 	gap: 1rem;
+// 	align-items: center;
+// 	padding: 1rem 2rem;
+// 	background-color: $primary-color;
+// 	color: rgb(0, 0, 0);
+// 	box-shadow: 0px 0px 10px rgb(190, 190, 190);
+// 	border-bottom: 1px solid rgb(196, 196, 196);
+	
+// 	img {
+// 		background-color: white;
+// 	}
+// 	h1 {
+// 		font-size: 1.5rem;
+// 		font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+// 	}
+// 	button {
+// 		background-color: transparent;
+// 		color: rgb(0, 0, 0);
+// 		border: 2px solid black;
+// 		cursor: pointer;
+// 		font-size: 1rem;
+// 		padding: 0.5rem 1rem;
+// 		border-radius: 5px;
+// 		font-weight: bold;
+	
+// 		&:hover {
+// 		  background-color: rgba(255, 255, 255, 0.1);
+// 		}
+// 	  }
+
+// 	  div {
+
+// 		display: flex;
+// 		flex-direction: column;
+// 		label {
+
+// 		}
+// 	  input {
+// 		  border: none;
+// 		  border-bottom: 2px solid rgb(58, 48, 48);
+// 		  padding: 0.5rem;
+// 		  color: rgb(0, 0, 0);
+// 		  width: 200px;
+// 		  ::placeholder {
+// 			  color: #000000;
+// 		  }
+	  
+// 		  &:focus {
+// 			outline: none;
+// 			border-bottom-color: $secondary-color;
+// 		  }
+// 		}
+// 	  }
+	  
+
+// }
+
+
+.homepage-navbar {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	background-color: #fff; // White background like Google Trends
+	padding: 8px 30px; // More padding for better spacing
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); // Light shadow for depth
+	height: 64px; 
+
+	.container {
+		display: flex;
+		align-items: center;
+		justify-content: flex-start;
+		gap: 3rem;
+
+		.header {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			img {
+				width: 40px; // Scaled down logo size to match the proportions of the reference
+				margin-right: 5px;
+			  }
+			
+			  h1 {
+				font-size: 1.25rem; // Slightly smaller font size to reduce prominence
+				font-weight: 400;
+				color: #202124; // Google-style dark gray text
+				margin: 0;
+			  }
+		}
+	
+		.tools {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			gap: 2rem;
+			.create-new-document-button {
+				background-color: #1a73e8; // Google blue
+				color: white;
+				border: none;
+				padding: 8px 16px;
+				border-radius: 4px;
+				cursor: pointer;
+				font-size: 0.875rem; // Slightly smaller font for button
+				margin-left: 20px;
+				transition: background-color 0.3s ease;
+			
+				&:hover {
+				  background-color: #185abc;
+				}
+			}
+	
+			div {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+		  
+			
+			  
+				input[type="text"] {
+				  padding: 8px 16px;
+				  border: 1px solid #dadce0; // Light border color similar to Google's
+				  border-radius: 24px;
+				  font-size: 0.875rem; // Smaller font for input
+				  width: 250px; // Wider input field
+				  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+				  ::placeholder {
+					color: black;
+					opacity: 1;
+				  }
+			  
+				  &:focus {
+					outline: none;
+					box-shadow: 0 1px 3px rgba(60, 64, 67, 0.28);
+					border-color: #1a73e8; // Blue border on focus
+				  }
+				}
+			} 
+		}
+	}
+
+
+	
+	.profile-button {
+		background-color: transparent;
+		color: #5f6368; // Gray text
+		border: 1px solid #dadce0;
+		font-size: 0.875rem;
+		padding: 8px 16px;
+		border-radius: 24px;
+		cursor: pointer;
+		transition: background-color 0.3s ease;
+	
+		&:hover {
+			background-color: rgba(0, 0, 0, 0.04); // Light hover effect
+		}
+	}
+  }
+  
