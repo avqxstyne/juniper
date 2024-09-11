@@ -14,11 +14,12 @@ const TextEditor = () => {
     const {id: documentId} = useParams()
     const [socket, setSocket] = useState() as any;
     const [quill, setQuill] = useState() as any;
-    const [name, setName] = useState("Untitled Document");
+    // const localDevelopmentURL = "http://localhost:8000";
+    const productionURL = 'http://18.191.173.196:8000';
 
     // -- UseEffect for server connection to socket.io server ------------------------------
     useEffect(() => {
-      const s = io("http://localhost:8000");
+      const s = io(productionURL);
       setSocket(s);
     
       return () => {
@@ -161,6 +162,11 @@ const TextEditor = () => {
                 // @ts-ignore
                 socket.emit("save-document", quill.getContents(), document.querySelector(".document-name").value, Date.now())
               }}>Save</button>
+              <button onClick={() => { 
+                // @ts-ignore
+                socket.emit("delete-document", quill.getContents(), document.querySelector(".document-name").value)
+                window.open('/homepage', '_self')
+              }}>Delete</button>
             </div>
 
           </div>

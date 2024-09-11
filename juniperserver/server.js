@@ -32,7 +32,10 @@ expressApp.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });
   
-
+expressApp.get("/test", (req, res) => {
+    res.send("yooooooooooooooooooooooo")
+})
+ 
 
 expressApp.post("/api/auth/signup", async (req, res) => {
     const allUsers = await userModel.find({})
@@ -155,90 +158,6 @@ expressApp.post("/api/auth/signin", async (req, res) => {
     });
     
 });
-async function checkDuplicateUsernameOrEmail(req, res, next) {
-    // find the paramter username 
-
-    const allUsers = await userModel.find({})
-
-    const userData = []
-    for (let i = 0; i < allUsers.length; i++) {
-        userData.push({
-            email: allUsers[i].email, 
-            username: allUsers[i].username,
-            password: allUsers[i].password
-        })
-    }
-
-
-    for (let i = 0; i < userData.length; i++) {
-        if (userData[i].email == req.body.email) {
-            res.send("Operation unsuccessful: Email in use.")
-            console.log("Operation unsuccessful: Email in use.")
-
-            return res.status(200).send();
-        }
-        if (userData[i].username == req.body.username) {
-            res.send("Operation unsuccessful: Username in use.")
-            console.log("Operation unsuccessful: Username in use.")
-
-            return res.status(200).send();
-        }
-    }
-    
-    
-    
-    
-    //.then((user) => {
-    //     if (user) {
-    //         res.status(400).send({ message: "Operation unsuccessful: Username is already taken!" });
-    //         return;
-    //     }
-
-    //     userModel.findOne({
-    //         email: req.body.email
-    //     }).then((user) => {
-    //         if (user) {
-    //             res.status(400).send({ message: "Operation unsuccessful: Email is already in use!" });
-    //             return;
-    //         }
-    //     }).catch((err) => {
-    //         res.status(500).send({ message: err });
-    //         return;
-    //     })
-
-    // }).catch((err) => {
-    //     res.status(500).send({ message: err });
-    //     return;
-    // })
-    
-
-};
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // _______________ SOCKET SERVER CREATION_______________________________________________________________________________
 const defaultValue = ''
@@ -247,11 +166,20 @@ const io = new Server(8000, {
         origin: "*",
         methods: ["GET", "POST"],
         credentials: true
+    },
+    handlePreflightRequest: (req, res) => {
+        const headers = {
+            "Access-Control-Allow-Headers": "Content-Type, Authorization",
+            "Access-Control-Allow-Origin": req.headers.origin, 
+            "Access-Control-Allow-Credentials": true
+        };
+        res.writeHead(200, headers);
+        res.end();
     }
 });
 // _______________ SOCKET SERVER CREATION_______________________________________________________________________________
 
-connect();
+connect(); // mongo?
 
 // ____ SOCKET SERVER OPERATION_______________________________________________________________________________
 
@@ -272,13 +200,18 @@ io.on('connection', socket => {
             socket.broadcast.to(documentId).emit('receive-changes', delta)
         })
         socket.on('save-document', async (data, name, lastOpened) => {
-            console.log('save called')
-            console.log(name)
-            console.log(lastOpened)
-
+            console.log("red")
             await docModel.findByIdAndUpdate(documentId, {data, name, lastOpened})
         })
+        socket.on('delete-document', async (data, name, lastOpened) => {
+            console.log("Were in the delete socket")
+    
+            await docModel.findByIdAndDelete(documentId)
+            socket.emit("send-it-back", "yaur")
+        })
     });
+
+
 
     socket.on('get-all', async (currentLogin) => {
         const allDocuments = await docModel.find({author: currentLogin});
@@ -287,7 +220,7 @@ io.on('connection', socket => {
             data.push({
                 id: allDocuments[i]._id, 
                 name: allDocuments[i].name,
-                lastOpened: allDocuments[i].lastOpened
+                lastOpened: allDocuments[i].lastOpened 
             })
         }
         console.log(data)

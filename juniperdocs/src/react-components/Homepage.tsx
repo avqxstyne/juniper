@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState } from 'react'
 import mySvg from '../assets/juniperfv.svg'
 import { io } from 'socket.io-client';
 import '../styles/Homepage.scss'
@@ -20,6 +20,11 @@ const Homepage = (props: Props) => {
 
     const [socket, setSocket] = useState() as any;
     const [value, setValue] = useState("");
+    // const localDevelopmentURL = "http://localhost:8000";
+    const productionURL = 'http://18.191.173.196:8000';
+
+
+    // CHECK LOADS
 
     if (!localStorage.getItem("username")) {
         window.open('/login', '_self')
@@ -29,7 +34,7 @@ const Homepage = (props: Props) => {
     
 
     useEffect(() => {
-        const s = io("http://localhost:8000");
+        const s = io(productionURL);
         setSocket(s);
 
         return () => {
@@ -52,7 +57,7 @@ const Homepage = (props: Props) => {
                 
 
                 // IMPLEMENTING THE CLASS INHERITANCE REQUIREMENT IN APP FUNCTIONALITY
-                let href = `http://localhost:5173/documents/${data[i].id}`
+                let href = `/documents/${data[i].id}`
                 let text = `${data[i].name}`;
                 let lastOpened = data[i].lastOpened;
                 let date = new Date(lastOpened)
@@ -78,7 +83,7 @@ const Homepage = (props: Props) => {
             for (let i = 0; i < data.length; i++) {       
                 
                 // IMPLEMENTING THE CLASS INHERITANCE REQUIREMENT IN APP FUNCTIONALITY
-                let href = `http://localhost:5173/documents/${data[i].id}`
+                let href = `/documents/${data[i].id}`
                 let text = `${data[i].name}`
                 let lastOpened = data[i].lastOpened;
                 let date = new Date(lastOpened)

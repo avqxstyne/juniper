@@ -11,7 +11,8 @@ const LoginPage = () => {
     const [email, setEmail] = useState("")
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
-
+    // const localDevelopmentURL = "http://localhost:8080/api/auth/signin";
+    const productionURL = 'http://18.191.173.196:8080/api/auth/signin';
    
     return (
         <>
@@ -53,7 +54,7 @@ const LoginPage = () => {
                         if (emailInputBox.verify() == true) {
                             if (passwordInputBox.verify() == true) {
                                 
-                                fetch('http://localhost:8080/api/auth/signin', {
+                                fetch(productionURL, {
                                     method: "POST",
                                     headers: { 
                                         'Content-Type': 'application/json',
@@ -74,7 +75,7 @@ const LoginPage = () => {
                                         alert(data.message)
 
                                     } else if (data.new_window == "true") {
-                                        window.open('/homepage','_blank', );
+                                        window.open('/homepage','_self', );
                                         localStorage.setItem('username', data.username)
 
                                     }

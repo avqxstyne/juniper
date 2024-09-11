@@ -48,10 +48,6 @@ export default class DocView extends Doc {
         subChildLink.href = this.link;  
         subChildLink.innerText = this.name;
 
-        console.log("----------------------------------")
-        console.log(this.lastOpened)
-        console.log(typeof this.lastOpened)
-        console.log("----------------------------------")
 
              // Example usage:
         let formattedString = this.formatDate(this.lastOpened);
@@ -76,7 +72,11 @@ export default class DocView extends Doc {
 
         const displayElements = document.getElementsByClassName("homepage-document-list-item")
         for (let i = 0; i < displayElements.length; i++) {
-            if (displayElements[i].children[0].href == this.link) {
+
+      
+
+            if (displayElements[i].children[0].href == "http://ec2-18-191-173-196.us-east-2.compute.amazonaws.com:5173" + this.link) {
+    
                 displayContainer.removeChild(displayElements[i])
             }
         }

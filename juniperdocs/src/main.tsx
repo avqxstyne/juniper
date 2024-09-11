@@ -24,20 +24,20 @@ const router = createBrowserRouter([
     
   },
   {
-    path: "documents/:id",
+    path: "/documents/:id",
     element: <App />,
     
   },
   {
-    path: "homepage",
+    path: "/homepage",
     element: <Homepage name={'searchDocumentsInput'} id={'searchDocumentsInput'} placeholder={'Search Documents.'} />
   },
   {
-    path: "signup",
+    path: "/signup",
     element: <SignupPage />
   },
   {
-    path: "login",
+    path: "/login",
     element: <LoginPage />
   }
 ]);
@@ -46,5 +46,5 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <RouterProvider router={router} />
-  </React.StrictMode>,
+  </React.StrictMode>, 
 )
